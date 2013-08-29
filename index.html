@@ -1,0 +1,50 @@
+<!doctype html>
+<html lang="ja">
+<head>
+<meta charset="UTF-8">
+<meta name="description" content="ブラウザ上で実行できるBrainf*ckのインタプリタ･デバッガ">
+<meta name="keywords" content="Brainf*ck,Brainfuck,BF,interpreter,debugger,インタプリタ,デバッガ,prime,KMC,京大マイコンクラブ">
+<meta name="author" content="prime@KMC">
+<meta name="copyright" content="Copyright prime@KMC">
+<title>Brainf*ckインタプリタ</title>
+<script type="text/javascript" src="bfi.js"></script>
+</head>
+<body>
+<header>
+<h1>Brainf*ckインタプリタ</h1>
+</header>
+<section style="position:absolute;width:45%">
+<h2>入力･設定</h2>
+<form name="interpreter">
+	ソースコード:<br /><textarea style="width:100%;height:150px" name="code" placeholder="BFのソースコード"></textarea>
+	<br />入力:<br /><textarea style="width:100%;height:100px" name="inputdata" placeholder="入力に与える文字列"></textarea>
+	<br /><fieldset style="float:left"><legend>デバッグ設定</legend>
+		<div><input type="radio" name="isdebug" id="debug" checked="checked" onclick="debug_on()"><label for="debug">デバッグON</label>
+		<input type="radio" name="isdebug" id="nodebug" onclick="debug_off()"><label for="nodebug">デバッグOFF</label>
+		<br />1ステップの実行時間(ms)<br /><input type="number" name="waittime" style="width:100px;" value="100">
+		<br />追跡するメモリのサイズ(bytes)<br /><input type="number" name="memorysize" style="width:100px;" value="100"></div>
+	</fieldset><fieldset><legend>入力の形式</legend>
+		<div><input type="radio" name="inputtype" id="input_ascii" checked="checked"><label for="input_ascii">ASCII文字列</label>
+		<input type="radio" name="inputtype" id="input_hex"><label for="input_hex">16進数</label></div>
+	</fieldset>
+	<div style="float:left"><button type="button" name="run" onclick="bfi.run()" style="margin:5px">実行</button>
+	<button type="button" name="pause" disabled onclick="bfi.stop()" style="margin:5px">停止</button>
+	<button type="button" name="unpause" disabled onclick="bfi.restart()" style="margin:5px">再開</button>
+	<br /><button type="button" name="step" disabled onclick="bfi.steprun()" style="margin:5px">ステップ実行</button></div>
+	<div style="clear:left;"></div>
+</form>
+</section>
+<section style="position:absolute;left:50%;width:45%">
+<h2>結果･トレース</h2>
+出力:<br /><textarea style="width:100%;height:100px" id="outputdata" readonly></textarea>
+<br />プログラム:<br /><p style="font-family:monospace;text-align:left;width:100%;word-break:break-all" id="source"></p>
+<br />メモリ:<br /><p style="font-family:monospace;text-align:left;width:100%" id="memory"></p>
+</section>
+<footer style="position:absolute;bottom:0%;margin:5px">
+<form>
+<button type="button" onclick="bfi.showversion()">バージョン情報</button>
+</form>
+</footer>
+</body>
+</html>
+

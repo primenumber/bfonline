@@ -292,7 +292,7 @@ BFI.prototype.restart = function()
 }
 BFI.prototype.showversion = function()
 {
-	alert("Online Brainf*ck Debugger\nVersion 2.0.0 (2013/08/29)\nCopyright © prime@KMC");
+	alert("Online Brainf*ck Debugger\nVersion 2.0.0 (2013/08/29)\nprime@KMC");
 }
 
 function debug_on()

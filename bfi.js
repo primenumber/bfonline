@@ -147,7 +147,7 @@ BFI.prototype.step = function()
 		this.pt--;
 		break;
 		case ",":
-		this.ary[this.pt]=input.charCodeAt(this.inputpt);
+		this.ary[this.pt]=this.input.charCodeAt(this.inputpt);
 		this.inputpt++;
 		break;
 		case ".":
@@ -238,6 +238,13 @@ BFI.prototype.run = function()
 	this.init();
 	this.start();
 }
+BFI.prototype.isstop = function()
+{
+	this.init();
+	this.debug = false;
+	this.start();
+	alert("this program will stop");
+}
 BFI.prototype.stop = function()
 {
 	this.pause = true;
@@ -292,7 +299,7 @@ BFI.prototype.restart = function()
 }
 BFI.prototype.showversion = function()
 {
-	alert("Online Brainf*ck Debugger\nVersion 2.0.0 (2013/08/29)\nprime@KMC");
+	alert("Online Brainf*ck Debugger\nVersion 2.1.0 (2013/08/29)\nprime@KMC");
 }
 
 function debug_on()

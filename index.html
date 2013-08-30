@@ -6,12 +6,13 @@
 <meta name="keywords" content="Brainf*ck,Brainfuck,BF,interpreter,debugger,インタプリタ,デバッガ,prime,KMC,京大マイコンクラブ">
 <meta name="author" content="prime@KMC">
 <meta name="copyright" content="Copyright prime@KMC">
-<title>Brainf*ckインタプリタ</title>
+<title>オンラインBrainf*ckデバッガ</title>
 <script type="text/javascript" src="bfi.js"></script>
+<link rel="stylesheet" href="style.css" type="text/css">
 </head>
 <body>
 <header>
-<h1>Brainf*ckインタプリタ</h1>
+<h1>オンラインBrainf*ckデバッガ</h1>
 </header>
 <section style="position:absolute;width:45%">
 <h2>入力･設定</h2>
@@ -30,7 +31,8 @@
 	<div style="float:left"><button type="button" name="run" onclick="bfi.run()" style="margin:5px">実行</button>
 	<button type="button" name="pause" disabled onclick="bfi.stop()" style="margin:5px">停止</button>
 	<button type="button" name="unpause" disabled onclick="bfi.restart()" style="margin:5px">再開</button>
-	<br /><button type="button" name="step" disabled onclick="bfi.steprun()" style="margin:5px">ステップ実行</button></div>
+	<br /><button type="button" name="step" onclick="bfi.steprun()" style="margin:5px">ステップ実行</button>
+	<br /><button type="button" name="step" onclick="bfi.isstop()" style="margin:5px">停止性判定</button></div>
 	<div style="clear:left;"></div>
 </form>
 </section>
@@ -42,7 +44,7 @@
 </section>
 <footer style="position:absolute;bottom:0%;margin:5px">
 <form>
-<button type="button" onclick="bfi.showversion()">バージョン情報</button>
+<button type="button" onclick="bfi.showversion()">バージョン情報</button><a href="howto.html">使い方</a>
 </form>
 </footer>
 </body>

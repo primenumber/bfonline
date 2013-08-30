@@ -151,7 +151,7 @@ BFI.prototype.step = function()
 		this.inputpt++;
 		break;
 		case ".":
-		if(this.debug || this.wait == 0)
+		if(this.debug && this.wait != 0)
 			document.getElementById("outputdata").value += String.fromCharCode(this.ary[this.pt]);
 		else
 			this.outputstr += String.fromCharCode(this.ary[this.pt]);
@@ -263,7 +263,7 @@ BFI.prototype.start = function()
 	{
 		if(this.wait == 0)
 		{
-			while(this.i < this.codelen && !this.stp)this.step();
+			while(this.i < this.codelen && !this.pause)this.step();
 			document.getElementById("outputdata").value = this.outputstr;
 			if(this.i == this.codelen)
 			{
@@ -299,7 +299,7 @@ BFI.prototype.restart = function()
 }
 BFI.prototype.showversion = function()
 {
-	alert("Online Brainf*ck Debugger\nVersion 2.1.0 (2013/08/29)\nprime@KMC");
+	alert("Online Brainf*ck Debugger\nVersion 2.1.3 (2013/08/30)\nprime@KMC");
 }
 
 function debug_on()

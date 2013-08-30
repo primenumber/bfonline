@@ -8,44 +8,92 @@
 <meta name="copyright" content="Copyright prime@KMC">
 <title>オンラインBrainf*ckデバッガ</title>
 <script type="text/javascript" src="bfi.js"></script>
-<link rel="stylesheet" href="style.css" type="text/css">
+<link rel="stylesheet" type="text/css" href="css/bootstrap.min.css" media="screen, projection" />
+<script type="text/javascript" src="//ajax.googleapis.com/ajax/libs/jquery/1.10.2/jquery.min.js"></script>
+<script type="text/javascript" src="js/bootstrap.min.js"></script>
 </head>
 <body>
-<header>
-<h1>オンラインBrainf*ckデバッガ</h1>
-</header>
-<section style="position:absolute;width:45%">
+<div class="navbar navbar-inverse navbar-fixed-top">
+<div class="navbar-inner">
+<div class="container">
+<a class="brand" href=".">オンラインBrainf*ckデバッガ</a>
+<div class="nav-collapse collapse">
+<ul class="nav">
+<li class="active"><a href="#">Home</a></li>
+<li><a href="howto.html">Help</a></li>
+</ul></div>
+</div></div></div>
+<div class="container-fluid" style="margin-top:50px">
+<div class="row-fluid">
+<div class="span6">
 <h2>入力･設定</h2>
-<form name="interpreter">
-	ソースコード:<br /><textarea style="width:100%;height:150px" name="code" placeholder="BFのソースコード"></textarea>
-	<br />入力:<br /><textarea style="width:100%;height:100px" name="inputdata" placeholder="入力に与える文字列"></textarea>
-	<br /><fieldset style="float:left"><legend>デバッグ設定</legend>
-		<div><input type="radio" name="isdebug" id="debug" checked="checked" onclick="debug_on()"><label for="debug">デバッグON</label>
-		<input type="radio" name="isdebug" id="nodebug" onclick="debug_off()"><label for="nodebug">デバッグOFF</label>
-		<br />1ステップの実行時間(ms)<br /><input type="number" name="waittime" style="width:100px;" value="100">
-		<br />追跡するメモリのサイズ(bytes)<br /><input type="number" name="memorysize" style="width:100px;" value="100"></div>
-	</fieldset><fieldset><legend>入力の形式</legend>
-		<div><input type="radio" name="inputtype" id="input_ascii" checked="checked"><label for="input_ascii">ASCII文字列</label>
-		<input type="radio" name="inputtype" id="input_hex"><label for="input_hex">16進数</label></div>
-	</fieldset>
-	<div style="float:left"><button type="button" name="run" onclick="bfi.run()" style="margin:5px">実行</button>
-	<button type="button" name="pause" disabled onclick="bfi.stop()" style="margin:5px">停止</button>
-	<button type="button" name="unpause" disabled onclick="bfi.restart()" style="margin:5px">再開</button>
-	<br /><button type="button" name="step" onclick="bfi.steprun()" style="margin:5px">ステップ実行</button>
-	<br /><button type="button" name="step" onclick="bfi.isstop()" style="margin:5px">停止性判定</button></div>
-	<div style="clear:left;"></div>
+<form name="interpreter" class="form-vertical">
+	<div class="control-group">
+		<label class="control-label">ソースコード</label>
+		<div class="controls">
+			<textarea style="width:100%;height:150px" name="code" placeholder="BFのソースコード"></textarea>
+		</div>
+	</div>
+	<div class="control-group">
+		<label class="control-label">入力</label>
+		<div class="controls">
+			<textarea style="width:100%;height:100px" name="inputdata" placeholder="入力に与える文字列"></textarea>
+		</div>
+	</div>
+	<div class="control-group">
+		<label class="control-label">デバッグ</label>
+		<div class="controls">
+			<label class="radio"><input type="radio" name="isdebug" id="debug" checked="checked" onclick="debug_on()">ON</label>
+			<label class="radio"><input type="radio" name="isdebug" id="nodebug" onclick="debug_off()">OFF</label>
+		</div>
+	</div>
+	<div class="control-group">
+		<label class="control-label">1ステップの実行時間(ms)</label>
+		<div class="controls">
+			<input type="number" name="waittime" style="width:100px;" value="100">
+		</div>
+	</div>
+	<div class="control-group">
+		<label class="control-label">追跡するメモリのサイズ(bytes)</label>
+		<div class="controls">
+			<input type="number" name="memorysize" style="width:100px;" value="100">
+		</div>
+	</div>
+	<div class="control-group">
+		<label class="control-label">入力の形式</label>
+		<div class="controls">
+			<label class="radio" for="input_ascii"><input type="radio" name="inputtype" id="input_ascii" checked="checked">ASCII文字列</label>
+			<label class="radio" for="input_hex"><input type="radio" name="inputtype" id="input_hex">16進数</label>
+		</div>
+	</div>
+	<div class="form-actions">
+		<button type="button" name="run" onclick="bfi.run()" class="btn btn-primary">実行</button>
+		<button type="button" name="pause" disabled onclick="bfi.stop()" class="btn btn-danger">停止</button>
+		<button type="button" name="unpause" disabled onclick="bfi.restart()" class="btn btn-success">再開</button>
+		<button type="button" name="step" onclick="bfi.steprun()" class="btn">ステップ実行</button>
+		<button type="button" name="step" onclick="bfi.isstop()" class="btn">停止性判定</button>
+	</div>
 </form>
-</section>
-<section style="position:absolute;left:50%;width:45%">
-<h2>結果･トレース</h2>
-出力:<br /><textarea style="width:100%;height:100px" id="outputdata" readonly></textarea>
-<br />プログラム:<br /><p style="font-family:monospace;text-align:left;width:100%;word-break:break-all" id="source"></p>
-<br />メモリ:<br /><p style="font-family:monospace;text-align:left;width:100%" id="memory"></p>
-</section>
-<footer style="position:absolute;bottom:0%;margin:5px">
+</div>
+<div class="span6">
+	<h2>結果･トレース</h2>
+	<div class="control-group">
+		<label class="control-label">出力</label>
+		<div class="controls">
+			<textarea style="width:100%;height:100px" id="outputdata" readonly></textarea>
+		</div>
+	</div>
+	<p>プログラム:</p>
+	<p style="font-family:monospace;text-align:left;width:100%;word-break:break-all" id="source"></p>
+	<p>メモリ:</p>
+	<p style="font-family:monospace;text-align:left;width:100%" id="memory"></p>
+</div></div></div>
+<footer>
+<div class="row"><div class="span12">
 <form>
-<button type="button" onclick="bfi.showversion()">バージョン情報</button><a href="howto.html">使い方</a>
+<button type="button" onclick="bfi.showversion()" class="btn btn-info">バージョン情報</button>
 </form>
+</div></div>
 </footer>
 </body>
 </html>

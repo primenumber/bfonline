@@ -7,14 +7,26 @@
 <meta name="author" content="prime@KMC">
 <meta name="copyright" content="Copyright prime@KMC">
 <title>オンラインBrainf*ckデバッガ - 使い方</title>
-<link rel="stylesheet" href="style.css" type="text/css">
+<link rel="stylesheet" type="text/css" href="css/bootstrap.min.css" media="screen, projection" />
+<script type="text/javascript" src="//ajax.googleapis.com/ajax/libs/jquery/1.10.2/jquery.min.js"></script>
+<script type="text/javascript" src="js/bootstrap.min.js"></script>
 </head>
 <body>
-<header>
-<h1>オンラインBrainf*ckデバッガの使い方</h1>
-<p><a href=".">オンラインBrainf*ckデバッガ</a>の正しい使い方について説明します</p>
-</header>
-<section id="howto">
+<div class="navbar navbar-inverse navbar-fixed-top">
+<div class="navbar-inner">
+<div class="container">
+<a class="brand" href=".">オンラインBrainf*ckデバッガ</a>
+<div class="nav-collapse collapse">
+<ul class="nav">
+<li><a href=".">Home</a></li>
+<li class="active"><a href="#">Help</a></li>
+</ul></div>
+</div></div></div>
+<div class="container" style="margin-top:50px">
+<div class="hero-unit">
+<h1>OnlineBFDebuggerの使い方</h1>
+<p>オンラインBrainf*ckデバッガの正しい使い方を説明します.</p>
+</div>
 <h2>入力･設定</h2>
 	<p>ソースコード:Brainf*ckのソースコードを入力します.</p>
 	<p>入力:入力に与える文字列を入力します.後述のオプションによりここに16進数を書き込んでバイナリデータを入力することもできます.</p>
@@ -36,7 +48,7 @@
 	<p>出力:Brainf*ckプログラムの吐いた出力が表示されます.</p>
 	<p>プログラム:デバッグ実行中に今ソースコードのどこを実行しているかが表示されます.</p>
 	<p>メモリ:デバッグ実行中に配列の中身を16進数で表示します.何バイト目まで表示するかは｢追跡するメモリのサイズ｣で変更できます.</p>
-</section>
+</div>
 </body>
 </html>
 

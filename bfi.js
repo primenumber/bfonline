@@ -1,3 +1,5 @@
+var memidoc,srcidoc;
+
 function BFI()
 {
 	this.codeary = new Array();
@@ -125,7 +127,7 @@ BFI.prototype.init = function()
 	this.debug = document.interpreter.isdebug[0].checked;
 	this.wait = document.interpreter.waittime.value;
 	document.getElementById("outputdata").value="";
-	document.getElementById("memory").innerHTML="";
+	document.getElementById("memory").innerHTML = "";
 	document.getElementById("source").innerHTML = "";
 	this.outputstr = "";
 	this.running = true;

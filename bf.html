@@ -7,61 +7,67 @@
 <meta name="author" content="prime@KMC">
 <meta name="copyright" content="Copyright prime@KMC">
 <title>オンラインBrainf*ckデバッガ</title>
-<script type="text/javascript" src="bfi2.js"></script>
+<script type="text/javascript" src="bfcontrol.js"></script>
+<script type="text/javascript" src="bfwrapper.js"></script>
+<script type="text/javascript" src="bfstate.js"></script>
+<script type="text/javascript" src="js/jquery-2.1.0.min.js"></script>
 <link rel="stylesheet" type="text/css" href="css/bootstrap.min.css" media="screen, projection" />
-<script type="text/javascript" src="http://ajax.googleapis.com/ajax/libs/jquery/1.10.2/jquery.min.js"></script>
+<link rel="stylesheet" type="text/css" href="css/bootstrap-theme.min.css" media="screen, projection" />
 <script type="text/javascript" src="js/bootstrap.min.js"></script>
 </head>
 <body>
-<div class="navbar navbar-inverse navbar-fixed-top">
-<div class="navbar-inner">
-<div class="container-fluid">
-<a class="brand" href=".">オンラインBrainf*ckデバッガ</a>
-<div class="nav-collapse collapse">
-<ul class="nav">
-<li class="active"><a href="#">Home</a></li>
-<li><a href="howto.html">Help</a></li>
-</ul></div>
-</div></div></div>
+<nav class="navbar navbar-default navbar-fixed-top">
+  <div class="container-fluid">
+    <div class="navbar-header">
+      <a class="navbar-brand" href=".">オンラインBrainf*ckデバッガ</a>
+    </div>
+    <div class="navbar-collapse collapse">
+      <ul class="nav navbar-nav">
+        <li class="active"><a href="#">Home</a></li>
+        <li><a href="howto.html">Help</a></li>
+      </ul>
+    </div>
+  </div>
+</nav>
 <div class="container-fluid" style="margin-top:50px">
-<div class="row-fluid">
-<div class="span6">
+<div class="row">
+<div class="col-md-6">
 <h2>入力･設定</h2>
 <form name="interpreter" class="form-vertical">
   <div class="control-group">
     <label class="control-label">ソースコード</label>
     <div class="controls">
-      <textarea style="width:100%;height:150px" name="code" placeholder="BFのソースコード"></textarea>
+      <textarea style="font-family:monospace;width:100%;height:150px;word-break:break-all;-moz-tab-size:2;-o-tab-size:2;tab-size:2" id="code" name="code" placeholder="BFのソースコード"></textarea>
     </div>
   </div>
   <div class="control-group">
     <label class="control-label">入力</label>
     <div class="controls">
-      <textarea style="width:100%;height:100px" name="inputdata" placeholder="入力に与える文字列"></textarea>
+      <textarea style="width:100%;height:100px" id="inputdata" name="inputdata" placeholder="入力に与える文字列"></textarea>
     </div>
   </div>
-  <div class="row-fluid">
-  <div class="span6">
+  <div class="row">
+  <div class="col-md-6">
     <div class="control-group">
       <label class="control-label">デバッグ</label>
       <div class="controls">
-        <label class="radio"><input type="radio" name="isdebug" id="debug" checked="checked" onclick="debug_on()">ON</label>
-        <label class="radio"><input type="radio" name="isdebug" id="nodebug" onclick="debug_off()">OFF</label>
+        <label class="radio"><input type="radio" name="isdebug" id="debug" checked="checked" onclick="bf_control.EnableDebug()">ON</label>
+        <label class="radio"><input type="radio" name="isdebug" id="nodebug" onclick="bf_control.DisableDebug()">OFF</label>
       </div>
     </div>
     <div class="control-group">
       <label class="control-label">1ステップの実行時間(ms)</label>
       <div class="controls">
-        <input type="number" name="waittime" style="width:100px;" value="100">
+        <input type="number" id="waittime" name="waittime" style="width:100px;" value="100">
       </div>
     </div>
     <div class="control-group">
       <label class="control-label">追跡するメモリのサイズ(bytes)</label>
       <div class="controls">
-        <input type="number" name="memorysize" style="width:100px;" value="100">
+        <input type="number" id="memorysize" name="memorysize" style="width:100px;" value="100">
       </div>
     </div>
-  </div><div class="span6">
+  </div><div class="col-md-6">
     <div class="control-group">
       <label class="control-label">入力の形式</label>
       <div class="controls">
@@ -78,15 +84,15 @@
     </div>
   </div></div>
   <div class="form-actions">
-    <button type="button" name="run" onclick="bf_control.start()" class="btn btn-primary">実行</button>
-    <button type="button" name="stop" disabled onclick="bf_control.pause()" class="btn btn-danger">停止</button>
-    <button type="button" name="restart" disabled onclick="bf_control.restart()" class="btn btn-success">再開</button>
-    <button type="button" name="runstep" onclick="bf_control.step()" class="btn">ステップ実行</button>
-    <button type="button" name="rollback" onclick="bf_control.rollback()" class="btn">逆再生</button>
+    <button type="button" id="run" name="run" onclick="bf_control.Run()" class="btn btn-primary">実行</button>
+    <button type="button" id="stop" name="stop" disabled onclick="bf_control.Stop()" class="btn btn-danger">停止</button>
+    <button type="button" id="restart" name="restart" disabled onclick="bf_control.Restart()" class="btn btn-success">再開</button>
+    <button type="button" id="runstep" name="runstep" onclick="bf_control.RunOneStep()" class="btn">ステップ実行</button>
+    <button type="button" id="rollback" name="rollback" onclick="bf_control.Rollback()" class="btn">逆再生</button>
   </div>
 </form>
 </div>
-<div class="span6">
+<div class="col-md-6">
   <h2>結果･トレース</h2>
   <div class="control-group">
     <label class="control-label">出力</label>
@@ -95,8 +101,7 @@
     </div>
   </div>
   <p>プログラム:</p>
-  <!--<p style="font-family:monospace;text-align:left;width:100%;word-break:break-all" id="source"></p>-->
-  <pre id="source"></pre>
+  <p style="font-family:monospace;text-align:left;width:100%;word-break:break-all" id="source"></p>
   <p>メモリ:</p>
   <p style="font-family:monospace;text-align:left;width:100%" id="memory"></p>
   <div class="control-group">
@@ -107,11 +112,11 @@
   </div>
 </div></div></div>
 <footer>
-<div class="row"><div class="span12">
+<div class="container-fluid"><div class="row"><div class="col-md-12">
 <form>
-<button type="button" onclick="bfi.showversion()" class="btn btn-info">バージョン情報</button>
+<button type="button" onclick="bf_control.ShowVersion()" class="btn btn-info">バージョン情報</button>
 </form>
-</div></div>
+</div></div></div>
 </footer>
 </body>
 </html>
